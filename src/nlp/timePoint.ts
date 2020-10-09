@@ -5,7 +5,7 @@
  */
 export default class TimePoint {
     tunit: number[]
-    constructor(date?: string | number | Date) {
+    constructor(date?: Date) {
         if (date) {
             const d = new Date(date)
             this.tunit = [

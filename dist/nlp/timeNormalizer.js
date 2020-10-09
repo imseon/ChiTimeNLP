@@ -1,18 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  *Intro:
  *Author:shine
  *Date:2017/11/1
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+const dayjs_1 = __importDefault(require("dayjs"));
 const timeUnit_1 = __importDefault(require("./timeUnit"));
 const strPreHandling_1 = __importDefault(require("./strPreHandling"));
 class TimeNormalizer {
     constructor() {
-        this.timeBase = false;
         this.expression = '';
         this.isPreferFuture = true;
     }
@@ -34,13 +34,21 @@ class TimeNormalizer {
     }
     parse(expression, timeBase) {
         this.expression = expression;
+        const result = new Date(expression);
+        // 如果 result 不为 Invalid Date ，说明原字符串已经是标准时间格式了
+        if (result.toString() !== 'Invalid Date') {
+            return dayjs_1.default(result).format('YYYY-MM-DD HH:mm:ss');
+        }
         const exp = TimeNormalizer._preHandling(expression);
         if (timeBase) {
             if (typeof timeBase === 'string' || typeof timeBase === 'number') {
                 this.timeBase = new Date(timeBase);
             }
-            else {
+            else if (timeBase instanceof Date) {
                 this.timeBase = timeBase;
+            }
+            else {
+                this.timeBase = new Date();
             }
         }
         else {

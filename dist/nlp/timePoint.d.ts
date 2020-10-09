@@ -5,5 +5,5 @@
  */
 export default class TimePoint {
     tunit: number[];
-    constructor(date?: string | number | Date);
+    constructor(date?: Date);
 }

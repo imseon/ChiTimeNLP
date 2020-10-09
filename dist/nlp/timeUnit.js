@@ -20,12 +20,7 @@ class TimeUnit {
     constructor(expTime, isPreferFuture, timeBase) {
         this.timeExpression = expTime;
         this._tp = new timePoint_1.default();
-        if (timeBase) {
-            this.timeBase = timeBase;
-        }
-        else {
-            this.timeBase = new Date();
-        }
+        this.timeBase = timeBase;
         this.isPreferFuture = false;
         if (isPreferFuture) {
             this.isPreferFuture = isPreferFuture;
@@ -182,7 +177,7 @@ class TimeUnit {
             match = m.match(rule);
             if (match && match.length > 0) {
                 this._tp.tunit[1] = parseInt(m.substring(0, match.index), 10);
-                this._tp.tunit[2] = parseInt(m.substring(match.index + 1), 10);
+                this._tp.tunit[2] = parseInt(m.substring((match.index || 0) + 1), 10);
                 /** 处理倾向于未来时间的情况   */
                 this._preferFuture(1);
             }
@@ -324,7 +319,7 @@ class TimeUnit {
                 if (match.index === 0) {
                     s = util_1.default.reverseStr(match[0]);
                 }
-                else if (tmp[match.index - 1] !== '刻') {
+                else if (tmp[(match.index || 0) - 1] !== '刻') {
                     s = util_1.default.reverseStr(match[0]);
                 }
                 if (s !== '') {

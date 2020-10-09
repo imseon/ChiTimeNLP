@@ -8,9 +8,9 @@ import timeEnum from '../enum'
 import util from '../util'
 
 class TimeUnit {
-    timeExpression: any
+    timeExpression: string
     _tp: TimePoint
-    timeBase: any
+    timeBase: Date
     isPreferFuture: boolean
     _tpOrigin: TimePoint
     isFirstTimeSolveContext: boolean
@@ -20,14 +20,10 @@ class TimeUnit {
      * 该方法作为时间表达式单元的入口，将时间表达式字符串传入
      *
      */
-    constructor(expTime: any, isPreferFuture: any, timeBase: any) {
+    constructor(expTime: string, isPreferFuture: boolean, timeBase: Date) {
         this.timeExpression = expTime
         this._tp = new TimePoint()
-        if (timeBase) {
-            this.timeBase = timeBase
-        } else {
-            this.timeBase = new Date()
-        }
+        this.timeBase = timeBase
         this.isPreferFuture = false
         if (isPreferFuture) {
             this.isPreferFuture = isPreferFuture
@@ -68,7 +64,7 @@ class TimeUnit {
         /** 1. 检查被检查的时间级别之前，是否没有更高级的已经确定的时间，如果有，则不进行处理. */
         for (let i = 0; i < checkTimeIndex; i++) {
             if (this._tp.tunit[i] !== -1) {
-                return 
+                return
             }
         }
         /** 2. 根据上下文补充时间 */
@@ -115,7 +111,7 @@ class TimeUnit {
         const checkTimeIndex = 2
         for (let i = 0; i < checkTimeIndex; i++) {
             if (this._tp.tunit[i] !== -1) {
-                return 
+                return
             }
         }
         /** 获取当前是在周几，如果识别到的时间小于当前时间，则识别时间为下一周 */
@@ -192,7 +188,7 @@ class TimeUnit {
             match = m.match(rule)
             if (match && match.length > 0) {
                 this._tp.tunit[1] = parseInt(m.substring(0, match.index), 10)
-                this._tp.tunit[2] = parseInt(m.substring(match.index + 1), 10)
+                this._tp.tunit[2] = parseInt(m.substring((match.index || 0) + 1), 10)
                 /** 处理倾向于未来时间的情况   */
                 this._preferFuture(1)
             }
@@ -338,7 +334,7 @@ class TimeUnit {
             if (match) {
                 if (match.index === 0) {
                     s = util.reverseStr(match[0])
-                } else if (tmp[match.index - 1] !== '刻') {
+                } else if (tmp[(match.index || 0) - 1] !== '刻') {
                     s = util.reverseStr(match[0])
                 }
                 if (s !== '') {
@@ -407,7 +403,7 @@ class TimeUnit {
      * 该方法识别特殊形式的时间表达式单元的各个字段
      */
     normSetTotal() {
-        let tmpParser = []
+        let tmpParser: string[] = []
         const tmp = this.timeExpression.replace(/(周|星期)[1-7]/g, '')
         let rule = new RegExp('([0-2]?[0-9]):[0-5]?[0-9]:[0-5]?[0-9]', 'g')
         let match = tmp.match(rule)

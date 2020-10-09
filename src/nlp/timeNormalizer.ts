@@ -3,16 +3,15 @@
  *Author:shine
  *Date:2017/11/1
  */
-
+import dayjs from 'dayjs'
 import TimeUnit from './timeUnit'
 import preHandle from './strPreHandling'
 
 export default class TimeNormalizer {
-    timeBase: boolean | Date
+    timeBase: Date
     expression: string
     isPreferFuture: boolean
     constructor() {
-        this.timeBase = false
         this.expression = ''
         this.isPreferFuture = true
     }
@@ -33,18 +32,25 @@ export default class TimeNormalizer {
         return this.timeBase
     }
 
-    setTimeBase(s: boolean | Date) {
+    setTimeBase(s: Date) {
         this.timeBase = s
     }
 
-    parse(expression: string, timeBase?: string | number | boolean | Date) {
+    parse(expression: string, timeBase?: string | number | Date): string | false {
         this.expression = expression
+        const result = new Date(expression)
+        // 如果 result 不为 Invalid Date ，说明原字符串已经是标准时间格式了
+        if (result.toString() !== 'Invalid Date') {
+            return dayjs(result).format('YYYY-MM-DD HH:mm:ss')
+        }
         const exp = TimeNormalizer._preHandling(expression)
         if (timeBase) {
             if (typeof timeBase === 'string' || typeof timeBase === 'number') {
                 this.timeBase = new Date(timeBase)
-            } else {
+            } else if (timeBase instanceof Date) {
                 this.timeBase = timeBase
+            } else {
+                this.timeBase = new Date()
             }
         } else {
             this.timeBase = new Date()

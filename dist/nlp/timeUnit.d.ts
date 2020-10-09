@@ -5,9 +5,9 @@
  */
 import TimePoint from './timePoint';
 declare class TimeUnit {
-    timeExpression: any;
+    timeExpression: string;
     _tp: TimePoint;
-    timeBase: any;
+    timeBase: Date;
     isPreferFuture: boolean;
     _tpOrigin: TimePoint;
     isFirstTimeSolveContext: boolean;
@@ -17,7 +17,7 @@ declare class TimeUnit {
      * 该方法作为时间表达式单元的入口，将时间表达式字符串传入
      *
      */
-    constructor(expTime: any, isPreferFuture: any, timeBase: any);
+    constructor(expTime: string, isPreferFuture: boolean, timeBase: Date);
     /**
      * 根据上下文时间补充时间信息
      */
