@@ -3,8 +3,9 @@
  *Author:shine
  *Date:2017/11/1
  */
-class TimePoint {
-    constructor(date) {
+export default class TimePoint {
+    tunit: number[];
+    constructor(date?: string | number | Date) {
         if (date) {
             const d = new Date(date);
             this.tunit = [
@@ -21,4 +22,3 @@ class TimePoint {
     }
 }
 
-module.exports = TimePoint;

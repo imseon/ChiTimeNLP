@@ -1,4 +1,4 @@
-const NLP = require('./dist/index').default
+import NLP from './index';
 
 const test = [
     '没有时间点',

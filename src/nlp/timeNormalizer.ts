@@ -4,17 +4,20 @@
  *Date:2017/11/1
  */
 
-const TimeUnit = require('./timeUnit');
-const preHandle = require('./strPreHandling');
+import TimeUnit from './timeUnit';
+import preHandle from './strPreHandling';
 
-class normalizer {
+export default class TimeNormalizer {
+    timeBase: boolean | Date;
+    expression: string;
+    isPreferFuture: boolean;
     constructor() {
         this.timeBase = false;
         this.expression = '';
         this.isPreferFuture = true;
     }
 
-    static _preHandling(expression) {
+    static _preHandling(expression: string) {
         expression = preHandle.delKeyword(expression, '\\s+'); // 清理空白符
         expression = preHandle.delKeyword(expression, '[的]+'); // 清理语气助词
         expression = preHandle.DBC2CDB(expression);// 全角转半角
@@ -30,15 +33,15 @@ class normalizer {
         return this.timeBase;
     }
 
-    setTimeBase(s) {
+    setTimeBase(s: boolean | Date) {
         this.timeBase = s;
     }
 
-    parse(expression, timeBase) {
+    parse(expression: string, timeBase?: string | number | boolean | Date) {
         this.expression = expression;
-        const exp = normalizer._preHandling(expression);
+        const exp = TimeNormalizer._preHandling(expression);
         if (timeBase) {
-            if (typeof (timeBase) === 'string') {
+            if (typeof (timeBase) === 'string' || typeof timeBase === 'number') {
                 this.timeBase = new Date(timeBase);
             } else {
                 this.timeBase = timeBase;
@@ -51,4 +54,3 @@ class normalizer {
     }
 }
 
-module.exports = normalizer;

@@ -3,17 +3,24 @@
  *Author:shine
  *Date:2017/11/1
  */
-const TimePoint = require('./timePoint');
-const timeEnum = require('../enum');
-const util = require('../util');
+import TimePoint from './timePoint';
+import timeEnum from '../enum';
+import util from '../util';
 
 class TimeUnit {
+    timeExpression: any;
+    _tp: TimePoint;
+    timeBase: any;
+    isPreferFuture: boolean;
+    _tpOrigin: TimePoint;
+    isFirstTimeSolveContext: boolean;
+    isAllDayTime: boolean;
     /**
      * 时间表达式单元构造方法
      * 该方法作为时间表达式单元的入口，将时间表达式字符串传入
      *
      */
-    constructor(expTime, isPreferFuture, timeBase) {
+    constructor(expTime: any, isPreferFuture: any, timeBase: any) {
         this.timeExpression = expTime;
         this._tp = new TimePoint();
         if (timeBase) {
@@ -33,7 +40,7 @@ class TimeUnit {
     /**
      * 根据上下文时间补充时间信息
      */
-    _checkContextTime(checkTimeIndex) {
+    _checkContextTime(checkTimeIndex: number) {
         for (let i = 0; i < checkTimeIndex; i++) {
             if (this._tp.tunit[i] === -1 && this._tpOrigin.tunit[i] !== -1) {
                 this._tp.tunit[i] = this._tpOrigin.tunit[i];
@@ -57,7 +64,7 @@ class TimeUnit {
      *
      * @param checkTimeIndex _tp.tunit时间数组的下标
      */
-    _preferFuture(checkTimeIndex) {
+    _preferFuture(checkTimeIndex: number) {
         /** 1. 检查被检查的时间级别之前，是否没有更高级的已经确定的时间，如果有，则不进行处理. */
         for (let i = 0; i < checkTimeIndex; i++) {
             if (this._tp.tunit[i] !== -1) return;
@@ -97,7 +104,7 @@ class TimeUnit {
      *
      * @param weekday 识别出是周几（范围1-7）
      */
-    _preferFutureWeek(weekday) {
+    _preferFutureWeek(weekday: number) {
         /** 1. 确认用户选项 */
         if (!this.isPreferFuture) {
             return;
@@ -816,9 +823,9 @@ class TimeUnit {
         this.normSetTotal();
         // this.modifyTimeBase();
 
-        this._tpOrigin.tunit = [].concat(this._tp.tunit);
+        this._tpOrigin.tunit = this._tp.tunit.concat();
 
-        const _resultTmp = [];
+        const _resultTmp: any[] = [];
         _resultTmp[0] = this._tp.tunit[0].toString();
         if (this._tp.tunit[0] >= 10 && this._tp.tunit[0] < 100) {
             _resultTmp[0] = `19${this._tp.tunit[0].toString()}`;
@@ -827,7 +834,7 @@ class TimeUnit {
             _resultTmp[0] = `200${this._tp.tunit[0].toString()}`;
         }
         let flag = false;
-        this._tp.tunit.forEach((t) => {
+        this._tp.tunit.forEach((t: number) => {
             if (t !== -1) {
                 flag = true;
             }
@@ -850,4 +857,4 @@ class TimeUnit {
     }
 }
 
-module.exports = TimeUnit;
+export default TimeUnit;

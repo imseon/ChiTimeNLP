@@ -18,16 +18,16 @@ const util = {
         '天蝎座', '射手座', '魔羯座'],
     constellationEdgeDay: [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22],
 
-    isEmptyStr: str => !(str && str.trim().length > 0),
-    zeroPad: (digits, n) => {
-        n = n.toString();
-        while (n.length < digits) {
-            n = `0${n}`;
+    isEmptyStr: (str: string) => !(str && str.trim().length > 0),
+    zeroPad: (digits: number, n: number) => {
+        let _n = n.toString();
+        while (_n.length < digits) {
+            _n = `0${n}`;
         }
-        return n;
+        return _n;
     },
-    reverseStr: str => str.split('').reverse().join(''),
-    isLeapYear: (year) => {
+    reverseStr: (str: string) => str.split('').reverse().join(''),
+    isLeapYear: (year: number) => {
         if (year / 4 * 4 !== year) { // eslint-disable-line
             return false;
         }
@@ -37,12 +37,12 @@ const util = {
 
         return (year / 400 * 400 === year);// eslint-disable-line
     },
-    year2Zodica: year => util.zodiacArray[(year % 12)],
-    date2Zodica: (date) => {
+    year2Zodica: (year: number) => util.zodiacArray[(year % 12)],
+    date2Zodica: (date: string | number | Date) => {
         const d = date ? new Date(date) : new Date();
         return util.year2Zodica(d.getFullYear());
     },
-    date2Constellation(date) {
+    date2Constellation(date: string | number | Date) {
         const d = date ? new Date(date) : new Date();
         let month = d.getMonth();
         const day = d.getDate();
@@ -59,11 +59,11 @@ const util = {
      * 是否是今天
      * @param date
      */
-    isToday: date => util.isTheDay(date, new Date()),
+    isToday: (date: any) => util.isTheDay(date, new Date()),
     /**
      * 获得指定时间那天的某个小时（24小时制）的整点时间
      */
-    getSpecificHourInTheDay: (date, hourIn24) => {
+    getSpecificHourInTheDay: (date: string | number | Date, hourIn24: number) => {
         const d = date ? new Date(date) : new Date();
         d.setHours(hourIn24, 0, 0, 0);
         return d;
@@ -71,7 +71,7 @@ const util = {
     /**
      * 取周一
      */
-    getFirstDayOfWeek: (date) => {
+    getFirstDayOfWeek: (date: string | number | Date) => {
         const d = date ? new Date(date) : new Date();
         let currentDay = d.getDay();
         currentDay = currentDay === 0 ? 7 : currentDay;
@@ -83,7 +83,7 @@ const util = {
      * @param AddDayCount
      * @return {Date}
      */
-    getDateAfterDays: (date, AddDayCount) => {
+    getDateAfterDays: (date: string | number | Date, AddDayCount: number) => {
         const d = date ? new Date(date) : new Date();
         d.setDate(d.getDate() + AddDayCount);
         return d;
@@ -95,7 +95,7 @@ const util = {
      * @param weekDay
      * @return {Date}
      */
-    getDateAfterWeeks: (date, AddWeekCount, weekDay) => {
+    getDateAfterWeeks: (date: string | number | Date, AddWeekCount: number, weekDay: number) => {
         const d = date ? new Date(date) : new Date();
         d.setDate(d.getDate() + (7 * AddWeekCount));
         if (weekDay) {
@@ -115,7 +115,7 @@ const util = {
      * @param AddMonthCount
      * @return {Date}
      */
-    getDateAfterMonths: (date, AddMonthCount) => {
+    getDateAfterMonths: (date: string | number | Date, AddMonthCount: number) => {
         const d = date ? new Date(date) : new Date();
         const day = d.getDate();
         d.setDate(1);
@@ -129,7 +129,7 @@ const util = {
      * @param AddYearCount
      * @return {Date}
      */
-    getDateAfterYears: (date, AddYearCount) => {
+    getDateAfterYears: (date: string | number | Date, AddYearCount: number) => {
         const d = date ? new Date(date) : new Date();
         d.setFullYear(d.getFullYear() + AddYearCount);
         return d;
@@ -137,11 +137,11 @@ const util = {
     /**
      * 某一天开始时间
      */
-    dayBegin: date => util.getSpecificHourInTheDay(date, 0),
+    dayBegin: (date: any) => util.getSpecificHourInTheDay(date, 0),
     /**
      * 某一天结束时间
      */
-    dayEnd: (date) => {
+    dayEnd: (date: string | number | Date) => {
         const d = date ? new Date(date) : new Date();
         d.setHours(23, 59, 59, 999);
         return d;
@@ -152,8 +152,8 @@ const util = {
      * @param day
      * @return {boolean}
      */
-    isTheDay: (date, day) => {
-        const d = date ? new Date(date) : new Date();
+    isTheDay: (date: string | number | Date, day: any) => {
+        const d = (date ? new Date(date) : new Date()).getTime();
         return (d >= util.dayBegin(day).getTime() && d <= util.dayEnd(day).getTime());
     },
     /**
@@ -161,7 +161,7 @@ const util = {
      * @param date
      * @return {string}
      */
-    formatDateDefault: (date) => {
+    formatDateDefault: (date: string | number | Date) => {
         const d = date ? new Date(date) : new Date();
         const year = d.getFullYear();
         const month = util.zeroPad(2, d.getMonth() + 1);
@@ -176,7 +176,7 @@ const util = {
      * @param strDateTime
      * @return {boolean}
      */
-    checkDateFormatAndValite: (strDateTime) => {
+    checkDateFormatAndValite: (strDateTime: string) => {
         if (util.isEmptyStr(strDateTime)) {
             return false;
         }
@@ -186,4 +186,4 @@ const util = {
         return true;
     }
 };
-module.exports = util;
+export default util;

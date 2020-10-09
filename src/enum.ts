@@ -1,12 +1,10 @@
-"use strict";
-
 /**
  *Intro:
  *Author:shine
  *Date:2017/11/1
  */
 
-var timeEnum = {
+const timeEnum = {
     dayBreak: 3, // 凌晨
     earlyMorning: 8, // 早上
     morning: 10, // 上午
@@ -16,4 +14,4 @@ var timeEnum = {
     lateNight: 20, // 晚、晚间
     midNight: 23 // 深夜
 };
-module.exports = timeEnum;
+export default timeEnum;

@@ -3,7 +3,7 @@
  *Author:shine
  *Date:2017/11/1
  */
-const util = require('../util');
+import util from '../util';
 
 const chnNumChar = {
     零: 0,
@@ -19,11 +19,11 @@ const chnNumChar = {
     九: 9
 };
 const chnNameValue = {
-    十: {value: 10, secUnit: false},
-    百: {value: 100, secUnit: false},
-    千: {value: 1000, secUnit: false},
-    万: {value: 10000, secUnit: true},
-    亿: {value: 100000000, secUnit: true}
+    十: { value: 10, secUnit: false },
+    百: { value: 100, secUnit: false },
+    千: { value: 1000, secUnit: false },
+    万: { value: 10000, secUnit: true },
+    亿: { value: 100000000, secUnit: true }
 };
 const handler = {
     delKeyword: (target, rules) => {
@@ -93,4 +93,4 @@ const handler = {
 
 };
 
-module.exports = handler;
+export default handler;
