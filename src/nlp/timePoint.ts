@@ -4,21 +4,20 @@
  *Date:2017/11/1
  */
 export default class TimePoint {
-    tunit: number[];
+    tunit: number[]
     constructor(date?: string | number | Date) {
         if (date) {
-            const d = new Date(date);
+            const d = new Date(date)
             this.tunit = [
                 d.getFullYear(),
                 d.getMonth() + 1,
                 d.getDate(),
                 d.getHours(),
                 d.getMinutes(),
-                d.getSeconds()
-            ];
+                d.getSeconds(),
+            ]
         } else {
-            this.tunit = [-1, -1, -1, -1, -1, -1];
+            this.tunit = [-1, -1, -1, -1, -1, -1]
         }
     }
 }
-

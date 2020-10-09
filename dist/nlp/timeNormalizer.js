@@ -36,7 +36,7 @@ class TimeNormalizer {
         this.expression = expression;
         const exp = TimeNormalizer._preHandling(expression);
         if (timeBase) {
-            if (typeof (timeBase) === 'string' || typeof timeBase === 'number') {
+            if (typeof timeBase === 'string' || typeof timeBase === 'number') {
                 this.timeBase = new Date(timeBase);
             }
             else {

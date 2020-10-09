@@ -15,7 +15,7 @@ class TimePoint {
                 d.getDate(),
                 d.getHours(),
                 d.getMinutes(),
-                d.getSeconds()
+                d.getSeconds(),
             ];
         }
         else {

@@ -47,7 +47,7 @@ class TimeUnit {
         if (this.isFirstTimeSolveContext && checkTimeIndex === 3 && this._tpOrigin.tunit[3] >= 12 && this._tp.tunit[3] < 12) {
             this._tp.tunit[3] += 12;
         }
-        if (checkTimeIndex === 3 && (this._tpOrigin.tunit[3] > this._tp.tunit[3])) {
+        if (checkTimeIndex === 3 && this._tpOrigin.tunit[3] > this._tp.tunit[3]) {
             this._tp.tunit[3] += 12;
         }
         this.isFirstTimeSolveContext = false;
@@ -63,8 +63,9 @@ class TimeUnit {
     _preferFuture(checkTimeIndex) {
         /** 1. 检查被检查的时间级别之前，是否没有更高级的已经确定的时间，如果有，则不进行处理. */
         for (let i = 0; i < checkTimeIndex; i++) {
-            if (this._tp.tunit[i] !== -1)
+            if (this._tp.tunit[i] !== -1) {
                 return;
+            }
         }
         /** 2. 根据上下文补充时间 */
         this._checkContextTime(checkTimeIndex);
@@ -106,8 +107,9 @@ class TimeUnit {
         /** 2. 检查被检查的时间级别之前，是否没有更高级的已经确定的时间，如果有，则不进行倾向处理. */
         const checkTimeIndex = 2;
         for (let i = 0; i < checkTimeIndex; i++) {
-            if (this._tp.tunit[i] !== -1)
+            if (this._tp.tunit[i] !== -1) {
                 return;
+            }
         }
         /** 获取当前是在周几，如果识别到的时间小于当前时间，则识别时间为下一周 */
         const d = this.timeBase;

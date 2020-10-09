@@ -12,6 +12,6 @@ const timeEnum = {
     afternoon: 15, // 下午、午后
     night: 18, // 晚上、傍晚
     lateNight: 20, // 晚、晚间
-    midNight: 23 // 深夜
-};
-export default timeEnum;
+    midNight: 23, // 深夜
+}
+export default timeEnum

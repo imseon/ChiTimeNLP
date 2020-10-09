@@ -13,7 +13,7 @@ const util = {
     ONE_MONTH_MILLISECOND: 2592000000,
     ONE_YEAR_MILLISECOND: 31536000000,
     zodiacArray: [
-        '猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'
+        '猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊',
     ],
     constellationArray: ['水瓶座', '双鱼座', '牡羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座',
         '天蝎座', '射手座', '魔羯座'],
@@ -36,7 +36,7 @@ const util = {
         }
         return (year / 400 * 400 === year); // eslint-disable-line
     },
-    year2Zodica: (year) => util.zodiacArray[(year % 12)],
+    year2Zodica: (year) => util.zodiacArray[year % 12],
     date2Zodica: (date) => {
         const d = date ? new Date(date) : new Date();
         return util.year2Zodica(d.getFullYear());
@@ -95,7 +95,7 @@ const util = {
      */
     getDateAfterWeeks: (date, AddWeekCount, weekDay) => {
         const d = date ? new Date(date) : new Date();
-        d.setDate(d.getDate() + (7 * AddWeekCount));
+        d.setDate(d.getDate() + 7 * AddWeekCount);
         if (weekDay) {
             let dWeekDay = d.getDay();
             if (dWeekDay === 0) {
@@ -152,7 +152,7 @@ const util = {
      */
     isTheDay: (date, day) => {
         const d = (date ? new Date(date) : new Date()).getTime();
-        return (d >= util.dayBegin(day).getTime() && d <= util.dayEnd(day).getTime());
+        return d >= util.dayBegin(day).getTime() && d <= util.dayEnd(day).getTime();
     },
     /**
      * 格式化时间
@@ -182,6 +182,6 @@ const util = {
             return false;
         }
         return true;
-    }
+    },
 };
 exports.default = util;
