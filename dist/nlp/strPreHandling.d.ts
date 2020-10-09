@@ -1,6 +1,6 @@
 declare const handler: {
-    delKeyword: (target: any, rules: any) => any;
-    numberTranslator: (target: any) => string;
-    DBC2CDB: (target: any) => string;
+    delKeyword: (target: string, rules: string | RegExp) => string;
+    numberTranslator: (target: string) => string;
+    DBC2CDB: (target: string) => string;
 };
 export default handler;

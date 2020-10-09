@@ -26,12 +26,12 @@ const chnNameValue = {
     亿: { value: 100000000, secUnit: true },
 }
 const handler = {
-    delKeyword: (target, rules) => {
+    delKeyword: (target: string, rules: string | RegExp) => {
         const r = new RegExp(rules, 'g')
         return target.replace(r, '')
     },
 
-    numberTranslator: (target) => {
+    numberTranslator: (target: string) => {
         let tmp = util.reverseStr(target)
         const rule = new RegExp('[末天日](?=(周|期星))', 'g')
         tmp = tmp.replace(rule, '7')
@@ -79,7 +79,7 @@ const handler = {
         return result
     },
 
-    DBC2CDB: (target) => {
+    DBC2CDB: (target: string) => {
         let tmp = ''
         for (let i = 0; i < target.length; i++) {
             if (target.charCodeAt(i) > 65248 && target.charCodeAt(i) < 65375) {
