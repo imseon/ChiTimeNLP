@@ -8,7 +8,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *Author:shine
  *Date:2017/11/1
  */
-const dayjs_1 = __importDefault(require("dayjs"));
 const timeUnit_1 = __importDefault(require("./timeUnit"));
 const strPreHandling_1 = __importDefault(require("./strPreHandling"));
 class TimeNormalizer {
@@ -34,22 +33,14 @@ class TimeNormalizer {
     }
     parse(expression, timeBase) {
         this.expression = expression;
-        const result = new Date(expression);
+        // const result = new Date(expression)
         // 如果 result 不为 Invalid Date ，说明原字符串已经是标准时间格式了
-        if (result.toString() !== 'Invalid Date') {
-            return dayjs_1.default(result).format('YYYY-MM-DD HH:mm:ss');
-        }
+        // if (result.toString() !== 'Invalid Date') {
+        //     return dayjs(result).format('YYYY-MM-DD HH:mm:ss')
+        // }
         const exp = TimeNormalizer._preHandling(expression);
-        if (timeBase) {
-            if (typeof timeBase === 'string' || typeof timeBase === 'number') {
-                this.timeBase = new Date(timeBase);
-            }
-            else if (timeBase instanceof Date) {
-                this.timeBase = timeBase;
-            }
-            else {
-                this.timeBase = new Date();
-            }
+        if (timeBase && (typeof timeBase === 'string' || typeof timeBase === 'number' || timeBase instanceof Date)) {
+            this.timeBase = new Date(timeBase);
         }
         else {
             this.timeBase = new Date();
