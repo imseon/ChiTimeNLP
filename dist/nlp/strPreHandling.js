@@ -61,8 +61,12 @@ const handler = {
                         section = 0;
                     }
                     else {
-                        // section += number * unit
-                        section += unit;
+                        if (number === 0) { // 解决十点十分问题
+                            section += unit;
+                        }
+                        else { // 其他情况
+                            section += number * unit;
+                        }
                     }
                     number = 0;
                 }
