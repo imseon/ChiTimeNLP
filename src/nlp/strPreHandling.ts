@@ -57,7 +57,8 @@ const handler = {
                         rtn += section
                         section = 0
                     } else {
-                        section += number * unit
+                        // section += number * unit
+                        section += unit
                     }
                     number = 0
                 }

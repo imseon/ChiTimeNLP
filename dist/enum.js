@@ -13,6 +13,6 @@ const timeEnum = {
     afternoon: 15,
     night: 18,
     lateNight: 20,
-    midNight: 23,
+    midNight: 23, // 深夜
 };
 exports.default = timeEnum;
