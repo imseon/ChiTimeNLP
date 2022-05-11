@@ -78,6 +78,28 @@ const util = {
         return util.getDateAfterDays(date, 1 - currentDay)
     },
     /**
+     * 获取相对多少分钟后的日期
+     * @param date
+     * @param AddMinuteCount
+     * @return {Date}
+     */
+     getDateAfterMinutes: function getDateAfterMinutes(date, AddMinuteCount) {
+        var d = date ? new Date(date) : new Date();
+        d.setMinutes(d.getMinutes() + AddMinuteCount);
+        return d;
+    },
+    /**
+     * 获取相对多少小时后的日期
+     * @param date
+     * @param AddHourCount
+     * @return {Date}
+     */
+     getDateAfterHours: function getDateAfterHours(date, AddHourCount) {
+        var d = date ? new Date(date) : new Date();
+        d.setHours(d.getHours() + AddHourCount);
+        return d;
+    },
+    /**
      * 获取相对多少天后的日期
      * @param date
      * @param AddDayCount
