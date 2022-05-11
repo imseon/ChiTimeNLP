@@ -34,6 +34,20 @@ declare const util: {
      */
     getFirstDayOfWeek: (date: string | number | Date) => Date;
     /**
+     * 获取相对多少分钟后的日期
+     * @param date
+     * @param AddMinuteCount
+     * @return {Date}
+     */
+    getDateAfterMinutes: (date: any, AddMinuteCount: any) => Date;
+    /**
+     * 获取相对多少小时后的日期
+     * @param date
+     * @param AddHourCount
+     * @return {Date}
+     */
+    getDateAfterHours: (date: any, AddHourCount: any) => Date;
+    /**
      * 获取相对多少天后的日期
      * @param date
      * @param AddDayCount

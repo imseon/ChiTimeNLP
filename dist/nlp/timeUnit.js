@@ -302,7 +302,7 @@ class TimeUnit {
      * 该方法识别时间表达式单元的分字段
      */
     normSetMinute() {
-        let rule = new RegExp('([0-5]?[0-9](?=分(?!钟)))', 'g');
+        let rule = new RegExp('([0-5]?[0-9](?=分(?!钟)[^后]))', 'g');
         let match = this.timeExpression.match(rule);
         if (match && match.length > 0) {
             this._tp.tunit[4] = parseInt(match[0], 10);
@@ -538,14 +538,43 @@ class TimeUnit {
             day = parseInt(match[0], 10);
             d = util_1.default.getDateAfterYears(d, day);
         }
-        if (flag[0] || flag[1] || flag[2]) {
+        rule = new RegExp('([\\d]+)个?(半)?(?=小时[以之]?后)', 'g');
+        match = this.timeExpression.match(rule);
+        if (match && match.length > 0) {
+            flag[3] = true;
+            day = parseInt(match[0], 10);
+            d = util_1.default.getDateAfterHours(d, day);
+            if (match[0].match(/半/)) {
+                d = util_1.default.getDateAfterMinutes(d, 30);
+            }
+        }
+        rule = new RegExp('([\\d]+)小时(\\d+分钟?[以之]?后)');
+        match = this.timeExpression.match(rule);
+        if (match && match.length > 0) {
+            flag[3] = true;
+            day = parseInt(match[1], 10);
+            d = util_1.default.getDateAfterHours(d, day);
+            this.timeExpression = match[2];
+        }
+        rule = new RegExp('(\\d+)(?=分钟?[以之]?后)', 'g');
+        match = this.timeExpression.match(rule);
+        if (match && match.length > 0) {
+            flag[4] = true;
+            day = parseInt(match[0], 10);
+            d = util_1.default.getDateAfterMinutes(d, day);
+        }
+        if (flag[0] || flag[1] || flag[2] || flag[3] || flag[4]) {
             this._tp.tunit[0] = d.getFullYear();
         }
-        if (flag[1] || flag[2]) {
+        if (flag[1] || flag[2] || flag[3] || flag[4]) {
             this._tp.tunit[1] = d.getMonth() + 1;
         }
-        if (flag[2]) {
+        if (flag[2] || flag[3] || flag[4]) {
             this._tp.tunit[2] = d.getDate();
+        }
+        if (flag[3] || flag[4]) {
+            this._tp.tunit[3] = d.getHours();
+            this._tp.tunit[4] = d.getMinutes();
         }
     }
     /**
